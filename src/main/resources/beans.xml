@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	<context:component-scan base-package="com.$2012" /> <!-- @Component -->
+	<aop:aspectj-autoproxy /> <!-- @Aspect -->
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" value="classpath:jdbc.properties" />
+	</bean>
+	<!-- org.apache.commons.dbcp.BasicDataSource只是众多数据源中的一种 -->
+	<bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<!-- 连接池启动时的初始连接数#界于min和max之间 -->
+		<property name="initialSize" value="${jdbc.initialSize}"/>
+		<!-- 最大连接数#max -->
+		<property name="maxActive" value="${jdbc.maxActive}"/>
+		<!-- 最大空闲值#当经过高峰期后，连接池可将用不到的连接慢慢释放一部分，一直减少到maxIdle为止 -->
+		<property name="maxIdle" value="${jdbc.maxIdle}"/>
+		<!-- 最小空闲值#当空闲的连接数少于minIdle时，连接池会预申请一些连接 -->
+		<property name="minIdle" value="${jdbc.minIdle}"/>
+	</bean>
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<list><value>com.$2012.entity.*</value></list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop> <!-- create会重新自动建表 -->
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="txManager"/> <!-- @Transactinal -->
+	
+	<!-- 可定义多个tx,aop
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" propagation="NOT_SUPPORTED" />
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="service" expression="execution(public * $2012.service..*.*(..))" />
+		<aop:advisor pointcut-ref="service" advice-ref="txAdvice" />
+	</aop:config>
+	 -->
+	
+	<!-- luecen搜索引擎的封装-compass -->
+	<!-- <bean id="compass" class="org.compass.spring.LocalCompassBean">
+		<property name="classMappings">
+			<list>
+				<value>com.$2012.entity.product.Product</value>
+				<value>com.$2012.entity.product.ProductType</value>
+				<value>com.$2012.entity.product.ProductStyle</value>
+				<value>com.$2012.entity.product.Brand</value>
+			</list>
+		</property>
+		<property name="compassSettings">
+			<props>
+				<prop key="compass.engine.analyzer.default.type">net.paoding.analysis.analyzer.PaodingAnalyzer</prop>
+				<prop key="compass.engine.connection">file://d:/index</prop> 容器初始化后自动创建此路径
+				在内存中建立索引
+				<prop key="compass.engine.connection">ram://index</prop>
+				
+				<prop key="compass.engine.highlighter.default.formatter.simple.pre"><![CDATA[<font color='red'>]]></prop>
+				<prop key="compass.engine.highlighter.default.formatter.simple.post"><![CDATA[</font>]]></prop>
+				<prop key="compass.transaction.factory">org.compass.spring.transaction.SpringSyncTransactionFactory</prop>
+			</props>
+		</property>
+		<property name="transactionManager" ref="txManager" />
+	</bean> -->
+	<!-- 自动完成 索引的添加/更新/删除操作 -->
+	<!-- <bean id="compassGps" class="org.compass.gps.impl.SingleCompassGps" init-method="start" destroy-method="stop">
+		<property name="compass" ref="compass" />
+		<property name="gpsDevices">
+			<list>
+				<bean class="org.compass.spring.device.hibernate.dep.SpringHibernate3GpsDevice">
+						<property name="name" value="hibernateDevice" />
+						<property name="sessionFactory" ref="sessionFactory" />
+				</bean>
+			</list>
+		</property>
+	</bean>	 -->
+</beans>

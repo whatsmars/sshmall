@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<!-- 多个人做项目时，必然会采用按模块包含配置文件，提高可读性，一个人做就没必要include了
+      本项目的开发顺序可以从此struts.xml里package的顺序看出来
+ -->
+<struts>
+  <constant name="struts.action.extension" value="do,action," />
+  <constant name="struts.configurationxmlreload" value="true" />
+  <constant name="struts.devMode" value="true" />
+  <constant name="struts.i18n.encoding" value="UTF-8" />
+  
+  <!-- 限定上传文件的大小（字节长度），但实际没起到限定作用，需在程序里限定大小，但此常量仍必须给出 -->
+  <constant name="struts.multipart.maxSize" value="20014555454555" />
+  
+  <package name="global" extends="struts-default">
+	  <interceptors>
+	    <interceptor name="permission" class="permissionInterceptor"></interceptor>
+	    <interceptor-stack name="myStack">
+	      <interceptor-ref name="defaultStack"></interceptor-ref>
+	      <interceptor-ref name="permission"></interceptor-ref>
+	    </interceptor-stack>
+	  </interceptors>
+	  <global-results>
+   	    <result name="noPermission">/page/share/message.jsp</result>
+   	  </global-results>
+  </package>
+  
+  <!-- 后台控制中心 --> <!-- 通过action访问页面，方便控制路径 -->
+  <package name="controlcenter" extends="struts-default" namespace="/control/center">
+	<action name="main"><result>/page/controlcenter/default.jsp</result></action>
+	<action name="top"><result>/page/controlcenter/top.jsp</result></action>
+	<action name="menu"><result>/page/controlcenter/menu.jsp</result></action>
+	<action name="right"><result>/page/controlcenter/right.jsp</result></action>
+	<action name="end"><result>/page/controlcenter/end.jsp</result></action>
+  </package>
+  
+  <!-- 后台产品类别管理 -->
+  <package name="producttype" extends="struts-default" namespace="/control/product/type">
+	<action name="list" class="productTypeAction" method="list">
+	  <result>/page/product/productTypeList.jsp</result>
+	</action>
+	<action name="add" class="productTypeAction" method="add">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="update" class="productTypeAction" method="update">
+	  <result type="redirectAction">list</result>
+	</action>
+  </package>
+  
+  <!-- 后台产品品牌管理 -->
+  <package name="productbrand" extends="struts-default" namespace="/control/product/brand">
+	<action name="list" class="brandAction" method="list">
+	  <result>/page/product/brandList.jsp</result>
+	</action>
+	<action name="simpleList" class="brandAction" method="simpleList">
+	  <result name="addProduct">/page/product/addProduct.jsp</result>
+	  <result name="updateProduct">/page/product/updateProduct.jsp</result>
+	  <result name="queryProduct">/page/product/queryProduct.jsp</result>
+	</action>
+	<action name="add" class="brandAction" method="add">
+	  <interceptor-ref name="fileUpload">
+        <!-- <param name="maximumSize">2097152</param> 貌似不起作用，一般在程序中控制
+             客户端对文件后缀进行检查，服务端对文件类型及其大小进行检查-->
+        <param name="allowedTypes">image/bmp,image/x-png,image/png,image/gif,image/jpeg,image/jpg,image/pjpeg</param>
+	  </interceptor-ref>
+	  <interceptor-ref name="defaultStack"></interceptor-ref>
+	  <result type="redirectAction">list</result>
+	  <result name="input">/page/share/uploadTypeError.jsp</result>
+	  <result name="toobig">/page/share/uploadSizeError.jsp</result>
+	</action>
+	<action name="updateName" class="brandAction" method="updateName">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="updateLogo" class="brandAction" method="updateLogo">
+	  <result type="redirectAction">list</result>
+	</action>
+  </package>
+  
+  <!-- 后台产品管理 -->
+  <package name="product" extends="struts-default" namespace="/control/product">
+	<action name="list" class="productAction" method="list">
+	  <result>/page/product/productList.jsp</result>
+	</action>
+	<action name="selectType" class="productAction" method="selectType">
+	  <result>/page/product/productTypeSelect.jsp</result>
+	</action>
+	<action name="add" class="productAction" method="add">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="showUpdateUI" class="productAction" method="showUpdateUI">
+	  <result>/page/product/updateProduct.jsp</result>
+	</action>
+	<action name="update" class="productAction" method="update">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="visible" class="productAction" method="visible">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="disvisible" class="productAction" method="disvisible">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="commend" class="productAction" method="commend">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="uncommend" class="productAction" method="uncommend">
+	  <result type="redirectAction">list</result>
+	</action>
+  </package>
+  
+  <!-- 后台产品样式管理 -->
+  <package name="productstyle" extends="struts-default" namespace="/control/product/style">
+	<action name="list" class="productStyleAction" method="list">
+	  <result>/page/product/productStyleList.jsp</result>
+	</action>
+	<action name="visible" class="productStyleAction" method="visible">
+	  <result type="chain">list</result>
+	</action>
+	<action name="disvisible" class="productStyleAction" method="disvisible">
+	  <result type="chain">list</result>
+	</action>
+	<action name="add" class="productStyleAction" method="add">
+	  <result type="chain">list</result> <!-- 这里必须用chain -->
+	</action>
+	<action name="update" class="productStyleAction" method="update">
+	  <result type="chain">list</result>
+	</action>
+  </package>
+  
+  <!-- 产品前台展示 -->
+  <package name="frontproduct" extends="struts-default" namespace="/front/product">
+	<action name="list" class="frontProductAction" method="list">
+	  <result name="list_image">/page/product/front/productList.jsp</result>
+	  <result name="list_imagetext">/page/product/front/productList_text.jsp</result>
+	</action>
+	<action name="findTopSale" class="frontProductAction" method="findTopSale">
+	  <result>/page/product/front/topSale.jsp</result>
+	</action>
+	<action name="findScanHistory" class="frontProductAction" method="findScanHistory">
+	  <result>/page/product/front/scanHistory.jsp</result>
+	</action>
+	<action name="detailShow" class="frontProductAction" method="detailShow">
+	  <result>/page/product/front/productDetail.jsp</result> <!-- type="freemarker" -->
+	</action>
+	<action name="search" class="frontProductAction" method="search">
+	  <result>/page/product/front/productSearchList.jsp</result>
+	  <result name="noResult">/page/product/front/noResult.jsp</result>
+	</action>
+  </package>
+  
+  <!-- 购物之购物车 -->
+  <package name="cart" extends="struts-default" namespace="/shopping/cart">
+	<action name="list" class="cartAction" method="list">
+	  <result>/page/shopping/cart.jsp</result>
+	  <result name="noCart">/page/shopping/noCart.jsp</result>
+	</action>
+	<action name="buy" class="cartAction" method="buy">
+	  <result type="redirect">/page/shopping/cart.jsp?directUrl=${directUrl}</result>
+	</action> <!-- 这里必须用redirect -->
+	<action name="delete" class="cartAction" method="delete">
+	  <result>/page/shopping/cart.jsp?directUrl=${directUrl}</result>
+	</action> <!-- 从前一个action获取值 -->
+	<action name="clear" class="cartAction" method="clear">
+	  <result>/page/shopping/cart.jsp?directUrl=${directUrl}</result>
+	</action>
+	<action name="updateAmount" class="cartAction" method="updateAmount">
+	  <result type="redirect">/page/shopping/cart.jsp?directUrl=${directUrl}</result>
+	</action>
+  </package>
+  
+  <!-- 用户注册登录与找回密码 -->
+  <package name="frontuser" extends="json-default" namespace="/front/user">
+	<action name="checkName" class="frontUserAction" method="checkName">
+	  <result></result>
+	  <!-- <result type="json"></result> -->
+	</action>
+	<action name="checkCode" class="frontUserAction" method="checkCode">
+	  <result></result>
+	</action>
+	<action name="register" class="frontUserAction" method="register">
+	  <result type="redirect">/page/user/front/login.jsp?toUI=${toUI}</result>
+	</action>
+	<action name="regCode" class="regCodeAction">
+	  <result type="stream">
+	    <param name="contentType">image/jpeg</param>   
+        <param name="inputName">inputStream</param>
+	  </result>
+	</action>
+	<action name="login" class="frontUserAction" method="login">
+	  <result>/</result> <!-- 即/index.jsp -->
+	  <result name="toCartUI">/page/shopping/cart.jsp</result>
+	  <result name="toMyCenterUI" type="chain">
+	    <param name="actionname">info</param>
+	    <param name="namespace">/mycenter</param>
+	  </result>
+	  <result name="nameorpass">/page/user/front/login.jsp</result>
+	</action>
+	<action name="logout" class="frontUserAction" method="logout">
+	  <result>/</result>
+	</action>
+	<action name="sendMail" class="frontUserAction" method="sendMail">
+	  <result>/page/user/front/sendMailSuccess.jsp</result>
+	</action>
+	<action name="xx" class="frontUserAction" method="xx">
+	  <result>/vm/email.jsp</result>
+	</action>
+	<action name="showChangePasswordUI" class="frontUserAction" method="showChangePasswordUI">
+	  <result>/page/user/front/changePassword.jsp</result>
+	  <result name="error">/page/user/front/error.jsp</result>
+	</action>
+	<action name="changePassword" class="frontUserAction" method="changePassword">
+	  <result>/page/share/message.jsp</result>
+	</action>
+  </package>
+  
+  <!-- 后台用户管理 -->
+  <package name="user" extends="global" namespace="/control/user">
+	<default-interceptor-ref name="myStack"></default-interceptor-ref>
+	<action name="list" class="userAction" method="list">
+	  <result>/page/user/userList.jsp</result>
+	</action>
+	<action name="delete" class="userAction" method="delete">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="enable" class="userAction" method="enable">
+	  <result type="redirectAction">list</result>
+	</action>
+  </package>
+  
+  <!-- 购物之进入结算中心（须登录） -->
+  <package name="customershopping" extends="struts-default" namespace="/customer/shopping/cart">
+	<action name="settleAccounts" class="cartAction" method="settleAccounts">
+	  <result type="chain">
+	    <param name="ActionName">showDeliverInfoUI</param>
+	    <param name="namespace">/customer/shopping/manage</param>
+	  </result>
+	  <result name="toOrderConfirmUI">/page/shopping/orderConfirm.jsp</result>
+	</action>
+  </package>
+  
+  <!-- 购物之选择订单的配送与支付方式，订单提交 -->
+  <package name="shoppingmanage" extends="struts-default" namespace="/customer/shopping/manage">
+	<action name="showDeliverInfoUI" class="shoppingManageAction" method="showDeliverInfoUI">
+	  <result name="noCart">/page/shopping/noCart.jsp</result>
+	  <result>/page/shopping/deliverInfo.jsp</result>
+	</action>
+	<action name="saveDeliverInfo" class="shoppingManageAction" method="saveDeliverInfo">
+	  <result name="noCart">/page/shopping/noCart.jsp</result>
+	  <result type="chain">showPaymentWayUI</result>
+	  <result name="toOrderConfirmUI">/page/shopping/orderConfirm.jsp</result>
+	</action>
+	<action name="showPaymentWayUI" class="shoppingManageAction" method="showPaymentWayUI">
+	  <result name="noCart">/page/shopping/noCart.jsp</result>
+	  <result name="toDeliverInfoUI" type="chain">showDeliverInfoUI</result>
+	  <result>/page/shopping/paymentWay.jsp</result>
+	</action>
+	<action name="savePaymentWay" class="shoppingManageAction" method="savePaymentWay">
+	  <result name="noCart">/page/shopping/noCart.jsp</result>
+	  <result>/page/shopping/orderConfirm.jsp</result>
+	</action>
+	<action name="saveOrder" class="shoppingManageAction" method="saveOrder">
+	  <result name="noCart">/page/shopping/noCart.jsp</result>
+	  <result name="net">/page/shopping/finish_net.jsp</result>
+	  <result name="cod">/page/shopping/finish_cod.jsp</result>
+	  <result name="bankRemittance">/page/shopping/finish_bankRemittance.jsp</result>
+	  <result name="postoFficeRemittance">/page/shopping/finish_postoFficeRemittance.jsp</result>
+	</action>
+  </package>
+  
+  <!-- 后台订单管理 -->
+  <package name="order" extends="struts-default" namespace="/control/order">
+	<action name="list" class="orderAction" method="list">
+	  <result>/page/order/orderList.jsp</result>
+	</action>
+	<action name="query">
+	  <result>/page/order/queryOrder.jsp</result>
+	</action>
+	<action name="view" class="orderAction" method="view">
+	  <result>/page/order/orderView.jsp</result>
+	</action>
+	<action name="updateBuyer" class="orderAction" method="updateBuyer">
+	  <result type="chain">view</result> <!-- 这里连续几个必须用chain -->
+	</action>
+	<action name="updateAcceptor" class="orderAction" method="updateAcceptor">
+	  <result type="chain">view</result>
+	</action>
+	<action name="updatePaymentWay" class="orderAction" method="updatePaymentWay">
+	  <result type="chain">view</result>
+	</action>
+	<action name="updateDeliverWay" class="orderAction" method="updateDeliverWay">
+	  <result type="chain">view</result>
+	</action>
+	<action name="updateProductAmount" class="orderAction" method="updateProductAmount">
+	  <result type="chain">view</result>
+	</action>
+	<action name="deleteOrderItem" class="orderAction" method="deleteOrderItem">
+	  <result type="chain">view</result>
+	</action>
+	<action name="updateDeliverFee" class="orderAction" method="updateDeliverFee">
+	  <result type="chain">view</result>
+	</action>
+	<action name="showPrintUI" class="orderAction" method="view">
+	  <result>/page/order/printOrder.jsp</result>
+	</action>
+	<action name="cancelOrder" class="orderAction" method="cancelOrder">
+	  <result type="chain">list</result>
+	</action>
+	<action name="confirmOrder" class="orderAction" method="confirmOrder">
+	  <result type="chain">list</result>
+	</action>
+	<action name="confirmPayment" class="orderAction" method="confirmPayment">
+	  <param name="order.state">WAITPAYMENT</param>
+	  <result type="chain">list</result>
+	</action>
+	<action name="turnWaitDeliver" class="orderAction" method="turnWaitDeliver">
+	  <param name="order.state">ADMEASUREPRODUCT</param>
+	  <result type="chain">list</result>
+	</action>
+	<action name="turnDelivered" class="orderAction" method="turnDelivered">
+	  <param name="order.state">WAITDELIVER</param>
+	  <result type="chain">list</result>
+	</action>
+	<action name="turnReceived" class="orderAction" method="turnReceived">
+	  <param name="order.state">DELIVERED</param>
+	  <result type="chain">list</result>
+	</action>
+	<action name="unlockOrder" class="orderAction" method="unlockOrder">
+	  <result type="chain">list</result>
+	</action>
+	<action name="unlockAll" class="orderAction" method="unlockAll">
+	  <result type="chain">list</result>
+	</action>
+	<action name="listLocked" class="orderAction" method="listLocked">
+	  <result>/page/order/orderList.jsp</result>
+	</action>  <!-- 这里不能chain-list -->
+	<action name="showAddMessageUI" class="orderAction" method="showAddMessageUI">
+	  <result>/page/order/addMessage.jsp</result>
+	</action>
+	<action name="addMsg" class="orderAction" method="addMsg">
+	  <result type="chain">view</result>
+	</action>
+  </package>
+  
+  <!-- 后台部门管理 -->
+  <package name="department" extends="struts-default" namespace="/control/department">
+	<action name="list" class="departmentAction" method="list">
+	  <result>/page/department/departmentList.jsp</result>
+	</action>
+	<action name="add" class="departmentAction" method="add">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="update" class="departmentAction" method="update">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="delete" class="departmentAction" method="delete">
+	  <result type="redirectAction">list</result>
+	</action>
+  </package>
+  
+  <!-- 后台员工管理 -->
+  <package name="employee" extends="struts-default" namespace="/control/employee">
+	<action name="list" class="employeeAction" method="list">
+	  <result>/page/department/employeeList.jsp</result>
+	</action>
+	<action name="showAddUI" class="departmentAction" method="list">
+	  <result>/page/department/addEmployee.jsp</result>
+	</action>
+	<action name="add" class="employeeAction" method="add">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="update" class="employeeAction" method="update">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="checkName" class="employeeAction" method="checkName">
+	  <result></result>
+	</action>
+	<action name="showUpdateUI" class="employeeAction" method="showUpdateUI">
+	  <result>/page/department/updateEmployee.jsp</result>
+	</action>
+	<action name="update" class="employeeAction" method="update">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="leave" class="employeeAction" method="leave">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="query" class="departmentAction" method="list">
+	  <result>/page/department/queryEmployee.jsp</result>
+	</action>
+	<action name="showPrivilegeGroupSetUI" class="employeeAction" method="showPrivilegeGroupSetUI">
+	  <result>/page/department/privilegeSet.jsp</result>
+	</action>
+	<action name="setPrivilegeGroup" class="employeeAction" method="setPrivilegeGroup">
+	  <result type="chain">list</result>
+	</action>
+  </package>
+  
+  <!-- 后台员工登录与退出 -->
+  <package name="employeelogin" extends="struts-default" namespace="/employee">
+	<action name="go">
+	  <result>/page/department/login.jsp</result>
+	</action>
+	<action name="login" class="employeeLoginAction" method="login">
+	  <result type="redirectAction">
+	    <param name="actionname">main</param>
+	    <param name="namespace">/control/center</param>
+	  </result>   <!-- 要拿到FieldError里的值，必须直接转向到jsp页面，action不行 -->
+	  <result name="nameorpass">/page/department/login.jsp</result>
+	</action>
+	<action name="logout" class="employeeLoginAction" method="logout">
+	  <result type="redirectAction">go</result>
+	</action>
+  </package>
+  
+  <!-- 后台权限组管理 --> <!-- 实际中通过ip地址拦截，被拦截的用户根本无法访问后台系统 -->
+  <package name="privilegegroup" extends="struts-default" namespace="/control/privilegegroup">
+	<action name="list" class="privilegeGroupAction" method="list">
+	  <result>/page/department/privilegeGroupList.jsp</result>
+	</action>
+	<action name="showAddUI" class="privilegeGroupAction" method="showAddUI">
+	  <result>/page/department/addPrivilegeGroup.jsp</result>
+	</action>
+	<action name="add" class="privilegeGroupAction" method="add">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="showUpdateUI" class="privilegeGroupAction" method="showUpdateUI">
+	  <result>/page/department/updatePrivilegeGroup.jsp</result>
+	</action>
+	<action name="update" class="privilegeGroupAction" method="update">
+	  <result type="redirectAction">list</result>
+	</action>
+	<action name="delete" class="privilegeGroupAction" method="delete">
+	  <result type="redirectAction">list</result>
+	</action>
+  </package>
+  
+  <!-- 系统初始化 -->
+  <package name="systeminit" extends="struts-default" namespace="/system">
+    <action name="init" class="systemInitAction">
+      <result>/page/share/message.jsp</result>
+    </action>
+  </package>
+  
+</struts>
+	

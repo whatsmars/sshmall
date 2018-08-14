@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/css/global/header01.css" rel="stylesheet" type="text/css"/>
+<link href="/css/product/product.css" rel="stylesheet" type="text/css"/>
+<link href="/css/global/topcommend.css" rel="stylesheet" type="text/css"/>
+<title>${product.name}-有才网</title>
+<meta name="Keywords" content="${product.name}" />
+</head>
+ 
+<body>
+<!--\#include virtual="/WEB-INF/page/share/Head.jsp" -->
+<div id="ContentBody"><!-- 页面主体 -->
+	 	 <div id="position"> 您现在的位置：<a href="/" name="linkHome">有才网</a> <span id="uc_cat_spnPath"> &gt;&gt; <a href='/front/product/list.do?type.typeId=${product.type.typeId}'>${product.type.name}</a> &gt;&gt; <em>${product.name}</em></span></div>
+<div class="browse_left"><!-- 页面主体 左边 --> 
+        <!-- 浏览过的商品 -->
+	 <div class="browse">
+	      <div class="browse_t">您最近浏览过的商品</div>
+	      <ul id="scanHistory"></ul>
+	 </div>
+	<!--精品推荐 start -->
+	<DIV id="topcommend" align="left">
+	       <DIV id="newtop"><IMG height=13 src="/images/global/sy2.gif" width=192></DIV>
+	       <DIV id="newlist">
+		  <DIV id="newmore">
+		    <DIV class="title">精品推荐</DIV>
+		  </DIV>
+			<span id="commenddetail">
+			</span>
+		</DIV>
+	</DIV>
+</div><!-- 页面主体 左边end -->
+	
+ <div id="Right" ><!-- 页面主体 右边 -->
+<form action="/shopping/cart/buy.do" method="post">
+<input type="hidden" id="productId" name="productId" value="${param.productId}"/>
+<input type="hidden" id="typeId" name="typeId" value="${param.typeId }"/>
+<input type="hidden" id="styleId" name="styleId" value="${styleId }"/>
+<div id="browse_left">
+      <div style="float:left;"><img src='${style.productImagePath}'/>
+      <br><img src="/images/global/zoom+.gif" style="cursor:hand;" onclick="location.href='/page/product/front/showBigImg.jsp?path=${style.productPrototypeImagePath}'"/></div>
+	  <div class="right_right" style="float:left;">									
+	    <div class="right_title"><b>${product.name}</b></div>
+	    <div class="right_desc"><ul><li class="li2">商品编号：${product.productId}<font color="#CC0000">（电话订购专用）</font></li></ul></div>
+	    <br><div class="right_desc">颜色：
+	    #if($product.styles.size()==1)
+		<li>颜色：$product.styles.iterator().next().name</li>
+		#else
+		 <li>颜色：<select name="colorSelect">#foreach($s in $product.styles)
+			<option #if($s==style)
+			      selected
+			      #end>$s.name</option>
+		  #end </SELECT></li>
+		#end										  
+	    </div>
+		<div class="right_desc">
+		  <ul>
+			<li style="width:320px;">市场价：<s>${product.marketPrice}</s> 元 <font color='#ff6f02'>本站价：<b>${product.salePrice} 元</b></font> 节省：<font color='#ff6f02'>${product.savedPrice }</font> 元										</li>
+		  	<li class="right_img"><input type="image" SRC="/images/global/sale.gif"></li>
+			<li class="guopiprice">[ <img src="/images/global/2j4.gif" border="0"/>&nbsp;<a href="#" target="_blank">配送说明</a> ]&nbsp;&nbsp;&nbsp;&nbsp;[ <img src="/images/global/2j4.gif" border="0"/>&nbsp;<a href="#" target="_blank">付款方式</a> ]</li>
+		  </ul>									
+	    </div>
+      </div>
+  </div>
+</form>
+<div class='right_blank'></div><div class='right_title1'>商品说明</div><div class='right_content'>${product.description}</div>
+ 
+ </div><!-- 页面主体 右边 end -->
+</div><!-- 页面主体 end -->
+ <!--\#include virtual="/WEB-INF/page/share/Foot.jsp" -->
+</body>
+</html>
