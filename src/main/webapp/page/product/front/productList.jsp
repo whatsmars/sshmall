@@ -3,7 +3,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title>${type.name} ÓĞ²ÅÍø</title>
+    <title>${type.name} æœ‰æ‰ç½‘</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -16,13 +16,12 @@
 <script type="text/javascript" src="/js/jquery.js"></script>
 <SCRIPT LANGUAGE="JavaScript">
 $(function(){
-  $("#topSale").html("ÕıÔÚ¼ÓÔØ...");
-  $("#scanHistory").html("ÕıÔÚ¼ÓÔØ...");
+  $("#topSale").html("æ­£åœ¨åŠ è½½...");
+  $("#scanHistory").html("æ­£åœ¨åŠ è½½...");
   $("#topSale").load("/front/product/findTopSale", {typeId:"${type.typeId}"});
   $("#scanHistory").load("/front/product/findScanHistory");
 });
-
-//µ½Ö¸¶¨µÄ·ÖÒ³Ò³Ãæ
+//åˆ°æŒ‡å®šçš„åˆ†é¡µé¡µé¢
 	function toPage(page){
 		$("#currentPage").val(page);
 		document.forms['productlist'].submit();
@@ -31,7 +30,7 @@ $(function(){
 </head>
 
 <body class="ProducTypeHome2" onload="javascript:pageInit()">
-	<jsp:include page="/page/share/Head.jsp"/> <!-- ÓÉÓÚHead.jspÀïÓĞform±íµ¥£¬¹Ê²»ÄÜ½«´Ë°üº¬ÔÚÏÂÃæµÄform±íµ¥Àï -->
+	<jsp:include page="/page/share/Head.jsp"/> <!-- ç”±äºHead.jspé‡Œæœ‰formè¡¨å•ï¼Œæ•…ä¸èƒ½å°†æ­¤åŒ…å«åœ¨ä¸‹é¢çš„formè¡¨å•é‡Œ -->
 	<form name="productlist" action="/front/product/list" method="post">
 	  <input id="currentPage" type="hidden" name="pageCtx.currentPage">
 	  <input type="hidden" name="sort" value="${sort }">
@@ -42,49 +41,49 @@ $(function(){
 		<c:if test="${statu.count==1}"><c:set var="out" value=" &gt;&gt; <em>${type.name}</em> ${out}"/></c:if>
 		<c:if test="${statu.count>1}"><c:set var="out" value=" &gt;&gt; <a href='/front/product/list?type.typeId=${type.typeId}&sort='>${type.name}</a> ${out}"/></c:if>
 	</c:forEach>
-    <div id="position">ÄúÏÖÔÚµÄÎ»ÖÃ: <a href="/" name="linkHome">ÓĞ²ÅÍø</a> 
-    <c:out value="${out}" escapeXml="false"></c:out>£¨${pageCtx.totalRecords}¸ö£©
+    <div id="position">æ‚¨ç°åœ¨çš„ä½ç½®: <a href="/" name="linkHome">æœ‰æ‰ç½‘</a> 
+    <c:out value="${out}" escapeXml="false"></c:out>ï¼ˆ${pageCtx.totalRecords}ä¸ªï¼‰
 	</div>
 
-    <!--Ò³Ãæ×ó²à·ÖÀàä¯ÀÀ²¿·Ö-->
+    <!--é¡µé¢å·¦ä¾§åˆ†ç±»æµè§ˆéƒ¨åˆ†-->
     <div class="browse_left">
          <div class="browse">
             <div class="browse_t">${type.name}</div>
 			
-				<h2><span class="gray">ä¯ÀÀÏÂ¼¶·ÖÀà</span></h2>
+				<h2><span class="gray">æµè§ˆä¸‹çº§åˆ†ç±»</span></h2>
 				<ul><c:forEach items="${type.childTypes}" var="childtype">						
 				<li class='bj_blue'><a href="/front/product/list?type.typeId=${childtype.typeId}">${childtype.name}</a></li></c:forEach></ul>
-				<span class="gray"><c:if test="${!empty type.parent.typeId }"><a href="/front/product/list?type.typeId=${type.parent.typeId }">&nbsp;&nbsp;[·µ»ØÉÏ¼¶·ÖÀà]</a></c:if></span>
+				<span class="gray"><c:if test="${!empty type.parent.typeId }"><a href="/front/product/list?type.typeId=${type.parent.typeId }">&nbsp;&nbsp;[è¿”å›ä¸Šçº§åˆ†ç±»]</a></c:if></span>
 	     </div>
 		 <div class="browse">
-	          <div class="browse_t">×î³©Ïú${type.name}</div>
+	          <div class="browse_t">æœ€ç•…é”€${type.name}</div>
 			  <ul id="topSale"></ul>
 	     </div>
 		 <div class="browse">
-	          <div class="browse_t">Äú×î½üä¯ÀÀ¹ıµÄÉÌÆ·</div>
+	          <div class="browse_t">æ‚¨æœ€è¿‘æµè§ˆè¿‡çš„å•†å“</div>
 			  <ul id="scanHistory"></ul>
 	     </div>
     </div>
-    <!--Ò³ÃæÓÒ²à·ÖÀàÁĞ±í²¿·Ö¿ªÊ¼-->
-    <oscache:cache> <!-- »º´æ²úÆ·Õ¹Ê¾Ä£¿é -->
+    <!--é¡µé¢å³ä¾§åˆ†ç±»åˆ—è¡¨éƒ¨åˆ†å¼€å§‹-->
+    <oscache:cache> <!-- ç¼“å­˜äº§å“å±•ç¤ºæ¨¡å— -->
     <div class="browse_right">
          <div class="select_reorder" style="height:60px;">
-              <div class="reorder_l">ÇëÑ¡ÔñÅÅĞò·½Ê½£º <c:if test="${'saleCount_desc'==param.sort}"><strong><em>ÏúÁ¿¶àµ½ÉÙ</em></strong></c:if><c:if test="${'saleCount_desc'!=param.sort}">
-              <a title='°´ÏúÁ¿½µĞò' href="/front/product/list?sort=saleCount_desc&type.typeId=${type.typeId}&showStyle=${param.showStyle }">ÏúÁ¿¶àµ½ÉÙ</a></c:if>
-			  | <c:if test="${'salePrice_desc'==param.sort}"><strong><em>¼Û¸ñ¸ßµ½µÍ</em></strong></c:if><c:if test="${'salePrice_desc'!=param.sort}">
-			  <a title='¼Û¸ñ¸ßµ½µÍ' href="/front/product/list?sort=salePrice_desc&type.typeId=${type.typeId}&showStyle=${param.showStyle }">¼Û¸ñ¸ßµ½µÍ</a></c:if>
-			  | <c:if test="${'salePrice_asc'==param.sort}"><strong><em>¼Û¸ñµÍµ½µÍ</em></strong></c:if><c:if test="${'salePrice_asc'!=param.sort}">
-			  <a title='¼Û¸ñµÍµ½¸ß' href="/front/product/list?sort=salePrice_asc&type.typeId=${type.typeId}&showStyle=${param.showStyle }">¼Û¸ñµÍµ½¸ß</a></c:if>
-			  | <c:if test="${empty param.sort}"><strong><em>×î½üÉÏ¼ÜÊ±¼ä</em></strong></c:if><c:if test="${!empty param.sort}">
-			  <a title='×î½üÉÏ¼ÜÊ±¼ä' href="/front/product/list?sort=&type.typeId=${type.typeId}&showStyle=${param.showStyle }">×î½üÉÏ¼ÜÊ±¼ä</a></c:if>
-			  &nbsp;&nbsp;¹²<font color="red">${pageCtx.totalRecords }</font>Ìõ¼ÇÂ¼£¬Ã¿Ò³ÏÔÊ¾<font color='red'>${pageCtx.maxResults }</font>Ìõ¼ÇÂ¼</div>
-			  <div class="reorder_r">ÏÔÊ¾·½Ê½£º<c:if test="${param.showStyle=='imagetext'}"><strong><em>Í¼ÎÄ°æ</em></strong></c:if><c:if test="${param.showStyle!='imagetext'}">
-		      <a href="/front/product/list?sort=${param.sort}&type.typeId=${type.typeId}&brandId=${brandId}&showStyle=imagetext&pageCtx.currentPage=${pageCtx.currentPage }">Í¼ÎÄ°æ</a></c:if> |
-		      <c:if test="${param.showStyle=='imagetext'}"><a href="/front/product/list?sort=${param.sort}&type.typeId=${type.typeId}&brandId=${brandId}&showStyle=image&pageCtx.currentPage=${pageCtx.currentPage }">Í¼Æ¬°æ</a>
-		      </c:if><c:if test="${param.showStyle!='imagetext'}"><strong><em>Í¼Æ¬°æ</em></strong></c:if>
+              <div class="reorder_l">è¯·é€‰æ‹©æ’åºæ–¹å¼ï¼š <c:if test="${'saleCount_desc'==param.sort}"><strong><em>é”€é‡å¤šåˆ°å°‘</em></strong></c:if><c:if test="${'saleCount_desc'!=param.sort}">
+              <a title='æŒ‰é”€é‡é™åº' href="/front/product/list?sort=saleCount_desc&type.typeId=${type.typeId}&showStyle=${param.showStyle }">é”€é‡å¤šåˆ°å°‘</a></c:if>
+			  | <c:if test="${'salePrice_desc'==param.sort}"><strong><em>ä»·æ ¼é«˜åˆ°ä½</em></strong></c:if><c:if test="${'salePrice_desc'!=param.sort}">
+			  <a title='ä»·æ ¼é«˜åˆ°ä½' href="/front/product/list?sort=salePrice_desc&type.typeId=${type.typeId}&showStyle=${param.showStyle }">ä»·æ ¼é«˜åˆ°ä½</a></c:if>
+			  | <c:if test="${'salePrice_asc'==param.sort}"><strong><em>ä»·æ ¼ä½åˆ°ä½</em></strong></c:if><c:if test="${'salePrice_asc'!=param.sort}">
+			  <a title='ä»·æ ¼ä½åˆ°é«˜' href="/front/product/list?sort=salePrice_asc&type.typeId=${type.typeId}&showStyle=${param.showStyle }">ä»·æ ¼ä½åˆ°é«˜</a></c:if>
+			  | <c:if test="${empty param.sort}"><strong><em>æœ€è¿‘ä¸Šæ¶æ—¶é—´</em></strong></c:if><c:if test="${!empty param.sort}">
+			  <a title='æœ€è¿‘ä¸Šæ¶æ—¶é—´' href="/front/product/list?sort=&type.typeId=${type.typeId}&showStyle=${param.showStyle }">æœ€è¿‘ä¸Šæ¶æ—¶é—´</a></c:if>
+			  &nbsp;&nbsp;å…±<font color="red">${pageCtx.totalRecords }</font>æ¡è®°å½•ï¼Œæ¯é¡µæ˜¾ç¤º<font color='red'>${pageCtx.maxResults }</font>æ¡è®°å½•</div>
+			  <div class="reorder_r">æ˜¾ç¤ºæ–¹å¼ï¼š<c:if test="${param.showStyle=='imagetext'}"><strong><em>å›¾æ–‡ç‰ˆ</em></strong></c:if><c:if test="${param.showStyle!='imagetext'}">
+		      <a href="/front/product/list?sort=${param.sort}&type.typeId=${type.typeId}&brandId=${brandId}&showStyle=imagetext&pageCtx.currentPage=${pageCtx.currentPage }">å›¾æ–‡ç‰ˆ</a></c:if> |
+		      <c:if test="${param.showStyle=='imagetext'}"><a href="/front/product/list?sort=${param.sort}&type.typeId=${type.typeId}&brandId=${brandId}&showStyle=image&pageCtx.currentPage=${pageCtx.currentPage }">å›¾ç‰‡ç‰ˆ</a>
+		      </c:if><c:if test="${param.showStyle!='imagetext'}"><strong><em>å›¾ç‰‡ç‰ˆ</em></strong></c:if>
 		      </div>
 		    <div class="brand">
-				<div class="FindByHint">°´<strong>Æ·ÅÆ</strong>Ñ¡Ôñ£º</div>
+				<div class="FindByHint">æŒ‰<strong>å“ç‰Œ</strong>é€‰æ‹©ï¼š</div>
 				<ul class="CategoryListTableLevel1"><c:forEach items="${brands}" var="brand">
 				<li><c:if test="${brandId == brand.brandId}">${brand.name}</c:if><c:if test="${brandId != brand.brandId}"><a href="/front/product/list?sort=${param.sort}&type.typeId=${type.typeId}&showStyle=${param.showStyle}&brandId=${brand.brandId}">${brand.name}</a></c:if></li></c:forEach>
 				</ul>
@@ -95,9 +94,9 @@ $(function(){
 <!---------------------------LOOP START------------------------------>
 <s:iterator value="products" var="entry">	
         <div class="detail">
-           <div class="goods"><a href="/front/product/detailShow?productId=${entry.productId }"><img title="µã»÷²é¿´ÏêÏ¸ĞÅÏ¢" src="<s:property value="#entry.styles.{productImagePath}[0]" />" alt="${entry.name}" width="140" height="168"  border="0"/></a></div>
+           <div class="goods"><a href="/front/product/detailShow?productId=${entry.productId }"><img title="ç‚¹å‡»æŸ¥çœ‹è¯¦ç»†ä¿¡æ¯" src="<s:property value="#entry.styles.{productImagePath}[0]" />" alt="${entry.name}" width="140" height="168"  border="0"/></a></div>
            <div><font color='#cc00cc'>${entry.name }</font></div>
-           <div class="save_number"><s>£¤${entry.marketPrice}</s>¡¡<strong><em>£¤${entry.salePrice}</em></strong><br>¡¡½ÚÊ¡£º£¤${entry.savedPrice}</div>
+           <div class="save_number"><s>ï¿¥${entry.marketPrice}</s>ã€€<strong><em>ï¿¥${entry.salePrice}</em></strong><br>ã€€èŠ‚çœï¼šï¿¥${entry.savedPrice}</div>
         </div>
 </s:iterator>
 <!----------------------LOOP END------------------------------->
