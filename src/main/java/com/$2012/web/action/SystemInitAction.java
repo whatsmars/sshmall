@@ -102,7 +102,7 @@ public class SystemInitAction extends BaseAction {
 			emp.setPassword("admin");
 			emp.setRealname("系统管理员");
 			emp.setGender(Gender.MAN);
-			emp.setIdCard(new IDCard("429004198903093876", "仙桃", new Date()));
+			emp.setIdCard(new IDCard("530005199004104987", "恒州", new Date()));
 			emp.getGroups().addAll(this.privilegeGroupService.getScrollData().getResultList());
 			this.employeeService.save(emp);
 		}
