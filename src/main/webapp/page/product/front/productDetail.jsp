@@ -1,14 +1,14 @@
-<%@ page pageEncoding="gbk"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ include file="/page/share/taglib.jsp" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <title>${product.name}-ÓĞ²ÅÍø</title>
-    
+    <title>${product.name}-æœ‰æ‰ç½‘</title>
+
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="expires" content="0">
 	<meta http-equiv="keywords" content="${product.name}">
 	<link href="/css/global/header01.css" rel="stylesheet" type="text/css">
 	<link href="/css/product/product.css" rel="stylesheet" type="text/css">
@@ -17,12 +17,11 @@
 <script type="text/javascript" src="/js/jquery.js"></script>
 <SCRIPT LANGUAGE="JavaScript">
 $(function(){
-  $("#commenddetail").html("ÕıÔÚ¼ÓÔØ...");
-  $("#scanHistory").html("ÕıÔÚ¼ÓÔØ...");
+  $("#commenddetail").html("æ­£åœ¨åŠ è½½...");
+  $("#scanHistory").html("æ­£åœ¨åŠ è½½...");
   $("#commenddetail").load("/front/product/findTopSale", {typeId:"${product.type.parent.typeId}"});
   $("#scanHistory").load("/front/product/findScanHistory");
 });
-
 function change(index) {
   var color = $("#colorSelect").val();
   var productId = $("#productId").val();
@@ -38,34 +37,34 @@ function change(index) {
 	</style>
 <script src="/js/mz-packed.js" type="text/javascript"></script>
   </head>
-  
+
   <body onload='$("#index").css("background", "");'>
 <jsp:include page="/page/share/Head.jsp"/>
-<div id="ContentBody"><!-- Ò³ÃæÖ÷Ìå -->
+<div id="ContentBody"><!-- é¡µé¢ä¸»ä½“ -->
 <c:set var="out" value="&gt;&gt; <em>${product.name}</em>"/><c:forEach items="${types}" var="t" varStatus="s">
 		<c:set var="out" value=" &gt;&gt; <a href='/front/product/list?type.typeId=${t.typeId}'>${t.name}</a> ${out}"/>
 	</c:forEach>
-	 	 <div id="position"> ÄúÏÖÔÚµÄÎ»ÖÃ£º<a href="/" name="linkHome">ÓĞ²ÅÍø</a> <span id="uc_cat_spnPath"><c:out value="${out}" escapeXml="false"></c:out></span></div>
- <div class="browse_left"><!-- Ò³ÃæÖ÷Ìå ×ó±ß --> 
-        <!-- ä¯ÀÀ¹ıµÄÉÌÆ· -->
+	 	 <div id="position"> æ‚¨ç°åœ¨çš„ä½ç½®ï¼š<a href="/" name="linkHome">æœ‰æ‰ç½‘</a> <span id="uc_cat_spnPath"><c:out value="${out}" escapeXml="false"></c:out></span></div>
+ <div class="browse_left"><!-- é¡µé¢ä¸»ä½“ å·¦è¾¹ -->
+        <!-- æµè§ˆè¿‡çš„å•†å“ -->
 	 <div class="browse">
-	      <div class="browse_t">Äú×î½üä¯ÀÀ¹ıµÄÉÌÆ·</div>
+	      <div class="browse_t">æ‚¨æœ€è¿‘æµè§ˆè¿‡çš„å•†å“</div>
 	      <ul id="scanHistory"></ul>
 	 </div>
-	<!--¾«Æ·ÍÆ¼ö start -->
+	<!--ç²¾å“æ¨è start -->
 	<DIV id="topcommend" align="left">
 	       <DIV id="newtop"><IMG height=13 src="/images/global/sy2.gif" width=192></DIV>
 	       <DIV id="newlist">
 		  <DIV id="newmore">
-		    <DIV class="title">¾«Æ·ÍÆ¼ö</DIV>
+		    <DIV class="title">ç²¾å“æ¨è</DIV>
 		  </DIV>
 			<span id="commenddetail">
 			</span>
 		</DIV>
 	</DIV>
-</div><!-- Ò³ÃæÖ÷Ìå ×ó±ßend -->
-	
- <div id="Right" ><!-- Ò³ÃæÖ÷Ìå ÓÒ±ß -->
+</div><!-- é¡µé¢ä¸»ä½“ å·¦è¾¹end -->
+
+ <div id="Right" ><!-- é¡µé¢ä¸»ä½“ å³è¾¹ -->
 <form action="/shopping/cart/buy" method="post">
 <INPUT TYPE="hidden" id="productId" name="productId" value="${param.productId}">
 <INPUT TYPE="hidden" id="typeId" name="typeId" value="${param.typeId }">
@@ -74,10 +73,10 @@ function change(index) {
       <div style="float:left;">
       <a href='<s:property value="style.productPrototypeImagePath" />' title="MagicZoom: Super bike" class="MagicZoom"><img src='<s:property value="style.productImagePath" />'/></a>
       </div>
-	  <div class="right_right" style="float:left;">									
+	  <div class="right_right" style="float:left;">
 	    <div class="right_title"><b>${product.name}</b></div>
-	    <div class=""><ul><li class="li2">ÉÌÆ·±àºÅ£º${product.productId}<font color="#CC0000">£¨µç»°¶©¹º×¨ÓÃ£©</font> <c:if test="${!empty product.brand}">Æ·ÅÆ£º${product.brand.name}</c:if></li></ul></div>
-	    <br><div class="">ÑÕÉ«£º
+	    <div class=""><ul><li class="li2">å•†å“ç¼–å·ï¼š${product.productId}<font color="#CC0000">ï¼ˆç”µè¯è®¢è´­ä¸“ç”¨ï¼‰</font> <c:if test="${!empty product.brand}">å“ç‰Œï¼š${product.brand.name}</c:if></li></ul></div>
+	    <br><div class="">é¢œè‰²ï¼š
 	    <s:if test="styles.size>1">
 	    <select id="colorSelect" onchange="change(this.selectedIndex);">
 	      <s:iterator value="styles" var="s">
@@ -88,18 +87,18 @@ function change(index) {
 	    </div>
 		<div class="right_desc">
 		  <ul>
-			<li style="width:320px;">ÊĞ³¡¼Û£º<s>${product.marketPrice}</s> Ôª <font color='#ff6f02'>±¾Õ¾¼Û£º<b>${product.salePrice} Ôª</b></font> ½ÚÊ¡£º<font color='#ff6f02'>${product.savedPrice }</font> Ôª										</li>
+			<li style="width:320px;">å¸‚åœºä»·ï¼š<s>${product.marketPrice}</s> å…ƒ <font color='#ff6f02'>æœ¬ç«™ä»·ï¼š<b>${product.salePrice} å…ƒ</b></font> èŠ‚çœï¼š<font color='#ff6f02'>${product.savedPrice }</font> å…ƒ										</li>
 		  	<li class="right_img"><INPUT TYPE="image" SRC="/images/global/sale.gif"></li>
-			<li class="guopiprice">[ <IMG src="/images/global/2j4.gif" border="0">&nbsp;<A href="#" target="_blank">ÅäËÍËµÃ÷</A> ]&nbsp;&nbsp;&nbsp;&nbsp;[ <IMG src="/images/global/2j4.gif" border="0">&nbsp;<A href="#" target="_blank">¸¶¿î·½Ê½</A> ]</li>
-		  </ul>									
+			<li class="guopiprice">[ <IMG src="/images/global/2j4.gif" border="0">&nbsp;<A href="#" target="_blank">é…é€è¯´æ˜</A> ]&nbsp;&nbsp;&nbsp;&nbsp;[ <IMG src="/images/global/2j4.gif" border="0">&nbsp;<A href="#" target="_blank">ä»˜æ¬¾æ–¹å¼</A> ]</li>
+		  </ul>
 	    </div>
       </div>
   </div>
 </form>
-<div class='right_blank'></div><div class='right_title1'>ÉÌÆ·ËµÃ÷</div><div class='right_content'>${product.description}</div>
-</div><!-- Ò³ÃæÖ÷Ìå ÓÒ±ß end -->
+<div class='right_blank'></div><div class='right_title1'>å•†å“è¯´æ˜</div><div class='right_content'>${product.description}</div>
+</div><!-- é¡µé¢ä¸»ä½“ å³è¾¹ end -->
 
-</div><!-- Ò³ÃæÖ÷Ìå end -->
+</div><!-- é¡µé¢ä¸»ä½“ end -->
 <jsp:include page="/page/share/Foot.jsp" />
 </body>
 </html>

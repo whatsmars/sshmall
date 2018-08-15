@@ -1,4 +1,4 @@
-<%@ page pageEncoding="gbk" import="java.util.Date;"%>
+<%@ page pageEncoding="UTF-8" import="java.util.Date"%>
 <%@ include file="/page/share/taglib.jsp" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>

@@ -1,4 +1,4 @@
-<%@ page pageEncoding="gbk" %>
+<%@ page pageEncoding="UTF-8" %>
 <%@ include file="/page/share/taglib.jsp" %>
 <UL>
 	<c:forEach items="${history}" var="p" varStatus="s">

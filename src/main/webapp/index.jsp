@@ -1,4 +1,4 @@
-<%@ page pageEncoding="gbk"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ include file="/page/share/taglib.jsp" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -9,11 +9,11 @@
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="µ±µ±Íø,ÌìÑÄÃ÷ÔÂµ¶,×ªÉúÊõ">
-	<meta http-equiv="description" content="ÕæµÄ°®Äã">
+	<meta http-equiv="keywords" content="å½“å½“ç½‘,å¤©æ¶¯æ˜Žæœˆåˆ€,è½¬ç”Ÿæœ¯">
+	<meta http-equiv="description" content="çœŸçš„çˆ±ä½ ">
 	<link href="/css/global/header01.css" rel="stylesheet" type="text/css">
   </head>
-  
+
   <body>
     <jsp:include page="/page/share/Head.jsp"/>
     <div style="color:#FFFBBB;font-size:160px;text-align:center;"><b>Freemarker module IIS</b></div>

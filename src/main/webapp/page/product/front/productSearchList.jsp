@@ -1,15 +1,15 @@
-<%@ page pageEncoding="gbk"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ include file="/page/share/taglib.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><title>ÓĞ²ÅÍø Í¼ÊéËÑË÷</title>    
+<head><title>æœ‰æ‰ç½‘ å›¾ä¹¦æœç´¢</title>
 	<link href="/css/global/header01.css" rel="stylesheet" type="text/css" />
-	<link href="/css/product/list.css" rel="stylesheet" type="text/css" />	
+	<link href="/css/product/list.css" rel="stylesheet" type="text/css" />
 	<link href="/css/global/topsell.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/jquery.js"></script>
 <script>
 $(function(){
-  $("#scanHistory").html("ÕıÔÚ¼ÓÔØ...");
+  $("#scanHistory").html("æ­£åœ¨åŠ è½½...");
   $("#scanHistory").load("/front/product/findScanHistory");
 });
 </script>
@@ -17,56 +17,56 @@ $(function(){
 
 <body class="ProducTypeHome2" onload='$("#index").css("background", "");'>
 	<jsp:include page="/page/share/Head.jsp"/>
-    <div id="position">ÄúÏÖÔÚµÄÎ»ÖÃ: <a href="/" name="linkHome">ÓĞ²ÅÍø</a> &gt;&gt; <em>²úÆ·²éÑ¯½á¹û</em> £¨${pageCtx.totalRecords}¸ö£©
+    <div id="position">æ‚¨ç°åœ¨çš„ä½ç½®: <a href="/" name="linkHome">æœ‰æ‰ç½‘</a> &gt;&gt; <em>äº§å“æŸ¥è¯¢ç»“æœ</em> ï¼ˆ${pageCtx.totalRecords}ä¸ªï¼‰
 	</div>
 
-    <!--Ò³Ãæ×ó²à·ÖÀàä¯ÀÀ²¿·Ö-->
+    <!--é¡µé¢å·¦ä¾§åˆ†ç±»æµè§ˆéƒ¨åˆ†-->
     <div class="browse_left">
 		 <div class="browse">
-	          <div class="browse_t">Äú×î½üä¯ÀÀ¹ıµÄÉÌÆ·</div>
+	          <div class="browse_t">æ‚¨æœ€è¿‘æµè§ˆè¿‡çš„å•†å“</div>
 			  <ul id="scanHistory"></ul>
 	     </div>
     </div>
-    <!--Ò³ÃæÓÒ²à·ÖÀàÁĞ±í²¿·Ö¿ªÊ¼-->
+    <!--é¡µé¢å³ä¾§åˆ†ç±»åˆ—è¡¨éƒ¨åˆ†å¼€å§‹-->
     <div class="browse_right">
 	     <div id="divNaviTop" class="number">
-	          <div class="number_l">ÒÔÏÂ²éÑ¯µ½<span class='number_white'>${pageCtx.totalRecords}</span>Ìõ½á¹û¡¡Ã¿Ò³ÏÔÊ¾<span class="number_white">${pageCtx.maxResults}</span>Ìõ</div>
+	          <div class="number_l">ä»¥ä¸‹æŸ¥è¯¢åˆ°<span class='number_white'>${pageCtx.totalRecords}</span>æ¡ç»“æœã€€æ¯é¡µæ˜¾ç¤º<span class="number_white">${pageCtx.maxResults}</span>æ¡</div>
 		      <div class="turnpage">
-                <div><em>µÚ${pageCtx.currentPage}Ò³</em></div>
+                <div><em>ç¬¬${pageCtx.currentPage}é¡µ</em></div>
 		      </div>
 	     </div>
 <!---------------------------LOOP START------------------------------>
-<s:iterator value="products" var="entry">	
+<s:iterator value="products" var="entry">
 		<div class="goodslist">
           <div class="goods"><a href="/front/product/detailShow?productId=${entry.productId }" target="_blank">
-            <img title="µã»÷²é¿´ÏêÏ¸ĞÅÏ¢" src='<s:property value="#entry.styles.{productImagePath}[0]" />' alt="${entry.name}" width="140" height="168"  border="0"/></a>
+            <img title="ç‚¹å‡»æŸ¥çœ‹è¯¦ç»†ä¿¡æ¯" src='<s:property value="#entry.styles.{productImagePath}[0]" />' alt="${entry.name}" width="140" height="168"  border="0"/></a>
           </div>
           <div class="goods_right">
-               <h2><a href="/front/product/detailShow?productId=${entry.productId }" target="_blank" title="µã»÷²é¿´ÏêÏ¸ĞÅÏ¢">${entry.name} [<c:forEach items="${entry.styles}" var="style">${style.name},</c:forEach>...]</a>&nbsp;&nbsp;&nbsp;/*${entry.type.name }*/ <c:if test="${!empty entry.brand}">Æ·ÅÆ£º${entry.brand.name}</c:if></h2>
+               <h2><a href="/front/product/detailShow?productId=${entry.productId }" target="_blank" title="ç‚¹å‡»æŸ¥çœ‹è¯¦ç»†ä¿¡æ¯">${entry.name} [<c:forEach items="${entry.styles}" var="style">${style.name},</c:forEach>...]</a>&nbsp;&nbsp;&nbsp;/*${entry.type.name }*/ <c:if test="${!empty entry.brand}">å“ç‰Œï¼š${entry.brand.name}</c:if></h2>
 	           <div class="content"><c:out value="${fn:substring(entry.description,0,200) }" escapeXml="false"/></div>
           </div>
           <div class="empty_box"></div>
           <div class="message_bottom" style="text-align:right;">
-			   <div class="buy"><s>£¤${entry.marketPrice}</s>¡¡<strong><em>£¤${entry.salePrice}</em></strong>¡¡½ÚÊ¡£º${entry.savedPrice}</div>
+			   <div class="buy"><s>ï¿¥${entry.marketPrice}</s>ã€€<strong><em>ï¿¥${entry.salePrice}</em></strong>ã€€èŠ‚çœï¼š${entry.savedPrice}</div>
 	      </div>
         </div>
 </s:iterator>
-<!----------------------LOOP END------------------------------->	
+<!----------------------LOOP END------------------------------->
 	     <div id="divNaviBottom" class="page_number">
 	     <div class="turnpage turnpage_bottom">
-	     <c:if test="${pageCtx.pageList.startPage!=1}"><a href="topage('1')">Ê×Ò³</a></c:if>
-	     <c:if test="${pageCtx.prePage!=0}"><a href="topage('${pageCtx.prePage}')">ÉÏÒ»Ò³</a></c:if>
+	     <c:if test="${pageCtx.pageList.startPage!=1}"><a href="topage('1')">é¦–é¡µ</a></c:if>
+	     <c:if test="${pageCtx.prePage!=0}"><a href="topage('${pageCtx.prePage}')">ä¸Šä¸€é¡µ</a></c:if>
 	     <c:forEach begin="${pageCtx.pageList.startPage}" end="${pageCtx.pageList.endPage}" var="p">
            <c:if test="${pageCtx.currentPage==p}"><div class='red'>${p}</div></c:if>
            <c:if test="${pageCtx.currentPage!=p}"><div class="page"><a href="topage('${p}')">[${p}]</a></div></c:if>
          </c:forEach>
-         <c:if test="${pageCtx.nextPage!=0}"><a href="topage('${pageCtx.nextPage}')">ÏÂÒ»Ò³</a></c:if>
-         <c:if test="${pageCtx.pageList.endPage!=pageCtx.totalPages}"><a href="topage('${pageCtx.totalPages }')">Î²Ò³</a></c:if>
-		<div>&nbsp;&nbsp;</div>Ìø×ªµ½µÚ
+         <c:if test="${pageCtx.nextPage!=0}"><a href="topage('${pageCtx.nextPage}')">ä¸‹ä¸€é¡µ</a></c:if>
+         <c:if test="${pageCtx.pageList.endPage!=pageCtx.totalPages}"><a href="topage('${pageCtx.totalPages }')">å°¾é¡µ</a></c:if>
+		<div>&nbsp;&nbsp;</div>è·³è½¬åˆ°ç¬¬
 		<select name="selectPage" class="kuang" onchange="javaScript:topage(this.value)">
 				<c:forEach begin="1" end="${pageCtx.totalPages}" var="p">
 				<option value="${p}" <c:if test="${pageCtx.currentPage==p}">selected</c:if>> ${p} </option></c:forEach>
-		</select>Ò³
+		</select>é¡µ
 		<script>
 		<!--
 		function topage(p){

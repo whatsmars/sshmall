@@ -1,15 +1,15 @@
-<%@ page pageEncoding="gbk"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ include file="/page/share/taglib.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><title>ÓÐ²ÅÍø Í¼ÊéËÑË÷</title>    
+<head><title>æœ‰æ‰ç½‘ å›¾ä¹¦æœç´¢</title>
 	<link href="/css/global/header01.css" rel="stylesheet" type="text/css" />
-	<link href="/css/product/list.css" rel="stylesheet" type="text/css" />	
+	<link href="/css/product/list.css" rel="stylesheet" type="text/css" />
 	<link href="/css/global/topsell.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="/js/jquery.js"></script>
 <script>
 $(function(){
-  $("#scanHistory").html("ÕýÔÚ¼ÓÔØ...");
+  $("#scanHistory").html("æ­£åœ¨åŠ è½½...");
   $("#scanHistory").load("/front/product/findScanHistory");
 });
 </script>
@@ -17,13 +17,13 @@ $(function(){
 
 <body class="ProducTypeHome2" onload="javascript:pageInit()">
 	<jsp:include page="/page/share/Head.jsp"/>
-    <div id="position">ÄúÏÖÔÚµÄÎ»ÖÃ: <a href="/" name="linkHome">ÓÐ²ÅÍø</a> &gt;&gt; <em>²úÆ·²éÑ¯½á¹û</em> £¨${pageCtx.totalRecords}¸ö£©
+    <div id="position">æ‚¨çŽ°åœ¨çš„ä½ç½®: <a href="/" name="linkHome">æœ‰æ‰ç½‘</a> &gt;&gt; <em>äº§å“æŸ¥è¯¢ç»“æžœ</em> ï¼ˆ${pageCtx.totalRecords}ä¸ªï¼‰
 	</div>
 
-    <!--Ò³Ãæ×ó²à·ÖÀàä¯ÀÀ²¿·Ö-->
+    <!--é¡µé¢å·¦ä¾§åˆ†ç±»æµè§ˆéƒ¨åˆ†-->
     <div class="browse_left">
 		 <div class="browse">
-	          <div class="browse_t">Äúä¯ÀÀ¹ýµÄÉÌÆ·</div>
+	          <div class="browse_t">æ‚¨æµè§ˆè¿‡çš„å•†å“</div>
 			  <ul id="scanHistory"></ul>
 	     </div>
     </div>
