@@ -1,4 +1,4 @@
-# sshmall
+# sshmall⚽🏀🏈
 
 ### SSH巅峰之作·有才电商网站，于2012年2-8月完成
 - 技术环境: struts2+spring2.5.6+hibernate+jsp, tomcat, jdk6+, mysql
